@@ -20,6 +20,7 @@ export default function RegisterPage() {
             password: form.password.value,
             role,
         };
+        console.log('nee', userData)
 
         const { data, error } = await authClient.signUp.email({
             email: userData?.email,
@@ -27,9 +28,10 @@ export default function RegisterPage() {
             name: userData?.name,
             image: userData?.image,
             role: userData?.role,
+            plan: 'free',
             callbackURL: "/dashboard"
         })
-
+        console.log('khaa', data?.user)
         if (error) {
             alert(error.message)
         }
