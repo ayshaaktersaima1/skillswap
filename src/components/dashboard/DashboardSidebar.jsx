@@ -61,7 +61,7 @@ const dashboardItems = {
         {
             icon: Envelope,
             label: 'My Proposals',
-            href: '/dashboard/freelancer/proposals',
+            href: '/dashboard/freelancer/my-proposals',
         },
         {
             icon: Bell,

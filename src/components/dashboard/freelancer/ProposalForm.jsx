@@ -3,11 +3,14 @@
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 
-const ProposalForm = ({ taskId }) => {
+const ProposalForm = ({ taskId, taskTitle }) => {
     const router = useRouter();
     const { data: session } = authClient.useSession();
 
     const freelancerEmail = session?.user?.email || '';
+    const freelancerId = session?.user?.id || '';
+
+    // console.log(freelancerId)
 
     const handleSubmitProposal = async (e) => {
         e.preventDefault();
@@ -19,6 +22,9 @@ const ProposalForm = ({ taskId }) => {
         proposalInfo.estimatedDays = Number(proposalInfo.estimatedDays);
         proposalInfo.status = 'pending';
         proposalInfo.createdAt = new Date().toISOString();
+        proposalInfo.freelancersId = freelancerId;
+        proposalInfo.taskTitle = taskTitle;
+
 
         console.log(proposalInfo)
 

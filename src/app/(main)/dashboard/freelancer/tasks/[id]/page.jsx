@@ -99,7 +99,7 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
                 </section>
 
                 {/* Proposal Form */}
-                <ProposalForm taskId={taskDetails?._id}></ProposalForm>
+                <ProposalForm taskTitle={taskDetails?.title} taskId={taskDetails?._id}></ProposalForm>
             </div>
         </div>
     );
