@@ -28,7 +28,7 @@ const dashboardItems = {
         {
             icon: Magnifier,
             label: 'My Tasks',
-            href: '/dashboard/client/tasks',
+            href: '/dashboard/client/my-tasks',
         },
         {
             icon: Person,
@@ -167,8 +167,8 @@ export default function DashboardSidebar({ closeDrawer }) {
                             href={item.href}
                             onClick={closeDrawer}
                             className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold no-underline transition ${active
-                                    ? 'bg-[#152A38] text-white shadow-lg'
-                                    : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
+                                ? 'bg-[#152A38] text-white shadow-lg'
+                                : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
                                 }`}
                         >
                             <Icon className="h-5 w-5" />
