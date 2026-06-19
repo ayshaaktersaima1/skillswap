@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link";
+import DeleteTaskBtn from "./DeleteTaskBtn";
 
 const statusStyles = {
     open: 'bg-green-50 text-green-700 border-green-200',
@@ -113,13 +114,9 @@ export default function MyTaskCard({ task }) {
                         Edit Task
                     </button>
                 )}
-                <button
-                    type="button"
-                    disabled={!canDelete}
-                    className="h-11 flex-1 rounded-xl bg-red-50 text-sm font-semibold text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    Delete Task
-                </button>
+                <DeleteTaskBtn task={task}
+                    canDelete={canDelete}
+                ></DeleteTaskBtn>
             </div>
 
             {!canEdit && (
