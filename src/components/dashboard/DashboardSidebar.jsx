@@ -33,7 +33,7 @@ const dashboardItems = {
         {
             icon: Person,
             label: 'Proposals',
-            href: '/dashboard/client/proposals',
+            href: '/dashboard/client/receivedProposals',
         },
         {
             icon: Envelope,
@@ -66,7 +66,7 @@ const dashboardItems = {
         {
             icon: Bell,
             label: 'Active Projects',
-            href: '/dashboard/freelancer/projects',
+            href: '/dashboard/freelancer/activeProjects',
         },
         {
             icon: Gear,

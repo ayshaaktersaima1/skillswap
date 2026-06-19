@@ -3,12 +3,13 @@
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 
-const ProposalForm = ({ taskId, taskTitle }) => {
+const ProposalForm = ({ taskId, taskTitle, clientId }) => {
     const router = useRouter();
     const { data: session } = authClient.useSession();
 
     const freelancerEmail = session?.user?.email || '';
     const freelancerId = session?.user?.id || '';
+    const freelancerName = session?.user?.name || '';
 
     // console.log(freelancerId)
 
@@ -24,6 +25,8 @@ const ProposalForm = ({ taskId, taskTitle }) => {
         proposalInfo.createdAt = new Date().toISOString();
         proposalInfo.freelancersId = freelancerId;
         proposalInfo.taskTitle = taskTitle;
+        proposalInfo.clientId = clientId;
+        proposalInfo.freelancerName = freelancerName;
 
 
         console.log(proposalInfo)
