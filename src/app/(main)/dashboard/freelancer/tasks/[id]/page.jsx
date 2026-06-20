@@ -1,4 +1,6 @@
 import ProposalForm from '@/components/dashboard/freelancer/ProposalForm';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 
 const TaskDetailsAndProposalSendingPages = async ({ params }) => {
@@ -12,10 +14,15 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
 
     const taskDetails = await res.json();
 
-    const onsubmit = async (e) => {
-        e.preventDefault();
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
-    }
+    const freelancersId = session?.user?.id;
+
+    const checkRes = await fetch(`${baseUrl}/api/checkProposal/${id}/${freelancersId}`);
+
+    const checkAlreadyApplied = await checkRes.json();
 
     const formattedDeadline = taskDetails?.deadline
         ? new Date(taskDetails.deadline).toLocaleDateString()
@@ -100,7 +107,7 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
 
                 {/* Proposal Form */}
                 <ProposalForm taskTitle={taskDetails?.title} taskId={taskDetails?._id} clientId={taskDetails?.
-                    clientId}></ProposalForm>
+                    clientId} checkAlreadyApplied={checkAlreadyApplied?.alreadyApplied}></ProposalForm>
             </div>
         </div>
     );
