@@ -1,3 +1,4 @@
+import AcceptProposal from "./AcceptProposal";
 import { RejectProposal } from "./RejectProposal";
 
 const statusStyles = {
@@ -109,12 +110,7 @@ const ReceivedProposalsList = ({ receivedProposals }) => {
                                 </div>
 
                                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                                    <button
-                                        type="button"
-                                        className="h-11 flex-1 rounded-xl bg-[#152A38] text-sm font-semibold text-white transition hover:bg-[#0F202B]"
-                                    >
-                                        Accept
-                                    </button>
+                                    <AcceptProposal proposal={proposal}></AcceptProposal>
 
                                     <RejectProposal proposal={proposal} />
                                 </div>
