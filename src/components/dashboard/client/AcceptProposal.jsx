@@ -16,8 +16,10 @@ const AcceptProposal = ({ proposal }) => {
                 taskId: proposal.taskId,
                 taskTitle: proposal.taskTitle,
                 freelancerName: proposal.freelancerName,
+                freelancerEmail: proposal.freelancerEmail,
                 freelancersId: proposal.freelancersId,
                 proposedBudget: proposal.proposedBudget,
+
             }),
         });
 

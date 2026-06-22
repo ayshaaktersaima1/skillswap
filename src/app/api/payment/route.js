@@ -28,6 +28,7 @@ export async function POST(request) {
             taskId,
             taskTitle,
             freelancerName,
+            freelancerEmail,
             freelancersId,
             proposedBudget,
         } = body;
@@ -63,7 +64,10 @@ export async function POST(request) {
                 clientEmail: user?.email,
                 proposalId,
                 taskId,
-                freelancersId,
+                taskTitle,
+                freelancerId: freelancersId,
+                freelancerEmail,
+                freelancerName,
             },
 
             mode: 'payment',
