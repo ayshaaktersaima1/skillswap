@@ -2,16 +2,33 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import {
+    Button,
+    Description,
+    FieldError,
+    Form,
+    Input,
+    Label,
+    TextField,
+} from '@heroui/react';
 import GoogleBtn from '@/components/GoogleBtn';
 import { authClient } from '@/lib/auth-client';
 
 export default function RegisterPage() {
     const [role, setRole] = useState('client');
 
-    const handleRegister = async (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         const form = e.currentTarget;
+
+        const skills =
+            role === 'freelancer'
+                ? form.skills.value
+                    .split(',')
+                    .map(skill => skill.trim())
+                    .filter(Boolean)
+                : [];
 
         const userData = {
             name: form.name.value,
@@ -19,33 +36,39 @@ export default function RegisterPage() {
             image: form.image.value,
             password: form.password.value,
             role,
+            isBlocked: false,
+
+            skills,
+            bio: role === 'freelancer' ? form.bio.value : '',
+            hourlyRate: role === 'freelancer' ? Number(form.hourlyRate.value) : 0,
         };
-        console.log('nee', userData)
 
         const { data, error } = await authClient.signUp.email({
-            email: userData?.email,
-            password: userData?.password,
-            name: userData?.name,
-            image: userData?.image,
-            role: userData?.role,
-            plan: 'free',
-            callbackURL: "/dashboard"
-        })
-        console.log('khaa', data?.user)
-        if (error) {
-            alert(error.message)
-        }
-        else {
-            alert('account created')
-        }
+            email: userData.email,
+            password: userData.password,
+            name: userData.name,
+            image: userData.image,
+            role: userData.role,
+            plan: userData.plan,
 
+            skills: userData.skills,
+            bio: userData.bio,
+            hourlyRate: userData.hourlyRate,
+
+            callbackURL: '/dashboard',
+        });
+
+        if (error) {
+            alert(error.message);
+        } else {
+            alert('Account created');
+        }
     };
 
     return (
         <main className="min-h-screen bg-[#F7FAF9] px-5 py-10 md:px-8">
             <section className="mx-auto flex min-h-screen w-[95%] items-center justify-center md:w-[90%]">
                 <div className="w-full max-w-xl rounded-3xl bg-[#152A38] px-6 py-10 shadow-2xl md:px-12 md:py-14">
-                    {/* Header */}
                     <div className="mb-9 text-center">
                         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-white/60">
                             SkillSwap
@@ -61,73 +84,69 @@ export default function RegisterPage() {
                         </p>
                     </div>
 
-                    {/* Form */}
-                    <form onSubmit={handleRegister} className="space-y-5">
-                        {/* Name */}
+                    <Form onSubmit={onSubmit} className="flex flex-col gap-4">
+                        <TextField isRequired name="name" type="text">
+                            <Label className="text-white/75">Name</Label>
+                            <Input placeholder="Enter your full name" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField
+                            isRequired
+                            name="email"
+                            type="email"
+                            validate={(value) => {
+                                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                                    return 'Please enter a valid email address';
+                                }
+
+                                return null;
+                            }}
+                        >
+                            <Label className="text-white/75">Email</Label>
+                            <Input placeholder="Enter your email address" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField isRequired name="image" type="url">
+                            <Label className="text-white/75">Profile Photo Link</Label>
+                            <Input placeholder="Paste your profile image URL" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField
+                            isRequired
+                            name="password"
+                            type="password"
+                            minLength={6}
+                            validate={(value) => {
+                                if (value.length < 6) {
+                                    return 'Password must be at least 6 characters long';
+                                }
+
+                                if (!/[A-Z]/.test(value)) {
+                                    return 'Password must contain at least one capital letter';
+                                }
+
+                                if (!/[a-z]/.test(value)) {
+                                    return 'Password must contain at least one lowercase letter';
+                                }
+
+                                return null;
+                            }}
+                        >
+                            <Label className="text-white/75">Password</Label>
+                            <Input placeholder="Create a password" />
+                            <Description className="text-white/60">
+                                At least 6 characters long, one capital letter, and one lowercase letter.
+                            </Description>
+                            <FieldError />
+                        </TextField>
+
                         <div>
-                            <label className="mb-2 block text-sm font-semibold text-white/75">
-                                Name
-                            </label>
-
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Enter your full name"
-                                required
-                                className="h-14 w-full rounded-xl border border-white/20 bg-white px-4 text-sm font-medium text-[#10202B] outline-none transition placeholder:text-[#7A8A92] focus:border-white focus:ring-4 focus:ring-white/20"
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-white/75">
-                                Email
-                            </label>
-
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Enter your email address"
-                                required
-                                className="h-14 w-full rounded-xl border border-white/20 bg-white px-4 text-sm font-medium text-[#10202B] outline-none transition placeholder:text-[#7A8A92] focus:border-white focus:ring-4 focus:ring-white/20"
-                            />
-                        </div>
-
-                        {/* Image URL */}
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-white/75">
-                                Image URL
-                            </label>
-
-                            <input
-                                type="url"
-                                name="image"
-                                placeholder="Paste your profile image URL"
-                                required
-                                className="h-14 w-full rounded-xl border border-white/20 bg-white px-4 text-sm font-medium text-[#10202B] outline-none transition placeholder:text-[#7A8A92] focus:border-white focus:ring-4 focus:ring-white/20"
-                            />
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-white/75">
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Create a password"
-                                required
-                                className="h-14 w-full rounded-xl border border-white/20 bg-white px-4 text-sm font-medium text-[#10202B] outline-none transition placeholder:text-[#7A8A92] focus:border-white focus:ring-4 focus:ring-white/20"
-                            />
-                        </div>
-
-                        {/* Role Selection */}
-                        <div>
-                            <label className="mb-3 block text-sm font-semibold text-white/75">
+                            <Label className="mb-3 block text-sm font-semibold text-white/75">
                                 Select Role
-                            </label>
+                            </Label>
 
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                 <button
@@ -142,7 +161,9 @@ export default function RegisterPage() {
                                         <p className="text-sm font-semibold">Client</p>
 
                                         <p
-                                            className={`mt-1 text-xs leading-5 ${role === 'client' ? 'text-[#52636C]' : 'text-white/60'
+                                            className={`mt-1 text-xs leading-5 ${role === 'client'
+                                                ? 'text-[#52636C]'
+                                                : 'text-white/60'
                                                 }`}
                                         >
                                             Post tasks and hire freelancers
@@ -196,14 +217,40 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Submit */}
-                        <button
+                        {role === 'freelancer' && (
+                            <div className="flex flex-col gap-4 rounded-2xl border border-white/15 bg-white/10 p-5">
+                                <TextField isRequired name="skills" type="text">
+                                    <Label className="text-white/75">Skills</Label>
+                                    <Input placeholder="React, Node.js, MongoDB" />
+                                    <Description className="text-white/60">
+                                        Separate skills with commas.
+                                    </Description>
+                                    <FieldError />
+                                </TextField>
+
+                                <TextField isRequired name="bio" type="text">
+                                    <Label className="text-white/75">Bio</Label>
+                                    <Input placeholder="Write a short professional bio" />
+                                    <FieldError />
+                                </TextField>
+
+                                <TextField isRequired name="hourlyRate" type="number">
+                                    <Label className="text-white/75">
+                                        Hourly Rate (USD)
+                                    </Label>
+                                    <Input placeholder="15" />
+                                    <FieldError />
+                                </TextField>
+                            </div>
+                        )}
+
+                        <Button
                             type="submit"
-                            className="mt-7 h-14 w-full rounded-2xl bg-white text-sm font-semibold text-[#152A38] shadow-xl transition hover:bg-[#F7FAF9]"
+                            className="mt-3 h-14 w-full rounded-2xl bg-white text-sm font-semibold text-[#152A38] shadow-xl transition hover:bg-[#F7FAF9]"
                         >
                             Create Account
-                        </button>
-                    </form>
+                        </Button>
+                    </Form>
 
                     <div className="my-7 flex items-center gap-4">
                         <span className="h-px flex-1 bg-white/20" />
@@ -217,7 +264,6 @@ export default function RegisterPage() {
 
                     <GoogleBtn label="Sign up with Google" />
 
-                    {/* Login Link */}
                     <p className="mt-7 text-center text-sm text-white/60">
                         Already have an account?{' '}
                         <Link

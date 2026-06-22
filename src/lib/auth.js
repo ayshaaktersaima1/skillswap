@@ -24,11 +24,35 @@ export const auth = betterAuth({
     user: {
         additionalFields: {
             role: {
-                defaultValue: 'client'
+                type: "string",
+                required: false,
+                defaultValue: "client",
             },
-            plan: {
-                defaultValue: 'free'
-            }
+
+            isBlocked: {
+                type: "boolean",
+                required: false,
+                defaultValue: false,
+                input: false,
+            },
+
+            skills: {
+                type: "string[]",
+                required: false,
+                defaultValue: [],
+            },
+
+            bio: {
+                type: "string",
+                required: false,
+                defaultValue: "",
+            },
+
+            hourlyRate: {
+                type: "number",
+                required: false,
+                defaultValue: 0,
+            },
         }
     }
 });
