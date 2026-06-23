@@ -9,7 +9,7 @@ const PostTask = () => {
     const { data: session } = authClient.useSession();
 
     const ClientId = session?.user?.id;
-    console.log('userrr', ClientId)
+    const ClientEmail = session?.user?.email;
 
     const handlePostTask = async (e) => {
         e.preventDefault();
@@ -27,10 +27,10 @@ const PostTask = () => {
             deadline: form.deadline.value,
             status: 'open',
             createdAt: new Date().toISOString(),
-            clientId: ClientId
+            clientId: ClientId,
+            clientEmail: ClientEmail,
         };
 
-        console.log(taskData);
 
         const res = await fetch(`${baseUrl}/api/tasks`, {
             method: 'POST',

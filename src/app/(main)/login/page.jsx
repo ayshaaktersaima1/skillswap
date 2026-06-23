@@ -13,29 +13,34 @@ export default function LoginPage() {
     const handleLogin = async (e) => {
 
         e.preventDefault();
-
-        //       const res = await fetch(`${baseUrl}/api/users`);
-
-        // const users = await res.json();
-
         const form = e.currentTarget;
-
         const userEmail = form.email.value;
 
+        const res = await fetch(`${baseUrl}/api/users/${userEmail}`);
 
+        const isBlocked = await res.json();
 
-        const loginData = {
-            email: form.email.value,
-            password: form.password.value,
-        };
+        if (isBlocked === true) {
+            alert('You are blocked');
+            return;
 
-        const { data, error } = await authClient.signIn.email({
+        }
+        else {
+            const loginData = {
+                email: form.email.value,
+                password: form.password.value,
+            };
 
-            email: loginData?.email,
-            password: loginData?.password,
-            callbackURL: "/",
+            const { data, error } = await authClient.signIn.email({
 
-        })
+                email: loginData?.email,
+                password: loginData?.password,
+                callbackURL: "/",
+
+            })
+
+        }
+
 
 
     };
