@@ -5,10 +5,24 @@ import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
 
 export default function LoginPage() {
+
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+
+
     const handleLogin = async (e) => {
+
         e.preventDefault();
 
+        //       const res = await fetch(`${baseUrl}/api/users`);
+
+        // const users = await res.json();
+
         const form = e.currentTarget;
+
+        const userEmail = form.email.value;
+
+
 
         const loginData = {
             email: form.email.value,
