@@ -37,6 +37,7 @@ const ActiveProjectsPage = async () => {
                     <ActiveProjectCard
                         key={project._id}
                         project={project}
+                        freelancersId={freelancersId}
                     />
                 ))}
             </div>

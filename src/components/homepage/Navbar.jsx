@@ -12,7 +12,7 @@ const navLinks = [
     },
     {
         label: 'Browse Tasks',
-        href: '/tasks',
+        href: '/allTasks',
     },
     {
         label: 'Browse Freelancers',

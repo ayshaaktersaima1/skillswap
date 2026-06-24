@@ -56,7 +56,7 @@ const dashboardItems = {
         {
             icon: Magnifier,
             label: 'Browse Tasks',
-            href: '/dashboard/freelancer/tasks',
+            href: '/allTasks',
         },
         {
             icon: Envelope,
