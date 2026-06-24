@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Link, Button } from '@heroui/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
@@ -45,8 +46,6 @@ export default function Navbar() {
         return pathname === href || pathname.startsWith(`${href}/`);
     };
 
-
-
     const handleLogout = async () => {
         await authClient.signOut();
 
@@ -58,7 +57,6 @@ export default function Navbar() {
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-[#DDE7EB] bg-white/85 backdrop-blur-xl">
             <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8 xl:px-0">
-                {/* Logo */}
                 <Link
                     href="/"
                     onPress={() => setIsMenuOpen(false)}
@@ -79,15 +77,14 @@ export default function Navbar() {
                     </div>
                 </Link>
 
-                {/* Desktop Links */}
                 <ul className="hidden items-center gap-1 md:flex">
                     {navLinks.map((item) => (
                         <li key={item.href}>
                             <Link
                                 href={item.href}
                                 className={`rounded-xl px-3 py-2 text-sm font-medium no-underline transition ${isActiveLink(item.href)
-                                    ? 'bg-[#E8EEF1] text-[#152A38]'
-                                    : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
+                                        ? 'bg-[#E8EEF1] text-[#152A38]'
+                                        : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
                                     }`}
                             >
                                 {item.label}
@@ -96,16 +93,16 @@ export default function Navbar() {
                     ))}
                 </ul>
 
-                {/* Desktop Right Side */}
                 <div className="hidden items-center gap-3 md:flex">
                     {user ? (
                         <>
-                            {/* User Info */}
                             <div className="flex items-center gap-2 rounded-full border border-[#DDE7EB] bg-white px-3 py-2">
                                 {user.image ? (
-                                    <img
+                                    <Image
                                         src={user.image}
                                         alt={user.name || 'User'}
+                                        width={32}
+                                        height={32}
                                         className="h-8 w-8 rounded-full object-cover"
                                     />
                                 ) : (
@@ -119,7 +116,6 @@ export default function Navbar() {
                                 </span>
                             </div>
 
-                            {/* Dashboard */}
                             <Link
                                 href={dashboardHref}
                                 className="inline-flex h-10 items-center gap-2 rounded-xl bg-[#E8EEF1] px-4 text-sm font-semibold text-[#152A38] no-underline transition hover:bg-[#DDE7EB]"
@@ -157,7 +153,6 @@ export default function Navbar() {
                                 Dashboard
                             </Link>
 
-                            {/* Logout */}
                             <button
                                 type="button"
                                 onClick={handleLogout}
@@ -185,7 +180,6 @@ export default function Navbar() {
                     )}
                 </div>
 
-                {/* Mobile Menu Button */}
                 <button
                     type="button"
                     onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -218,7 +212,6 @@ export default function Navbar() {
                 </button>
             </header>
 
-            {/* Mobile Menu */}
             {isMenuOpen && (
                 <div className="border-t border-[#DDE7EB] bg-white md:hidden">
                     <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-4">
@@ -228,8 +221,8 @@ export default function Navbar() {
                                 href={item.href}
                                 onPress={() => setIsMenuOpen(false)}
                                 className={`rounded-xl px-4 py-3 text-sm font-medium no-underline transition ${isActiveLink(item.href)
-                                    ? 'bg-[#E8EEF1] text-[#152A38]'
-                                    : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
+                                        ? 'bg-[#E8EEF1] text-[#152A38]'
+                                        : 'text-[#52636C] hover:bg-[#F7FAF9] hover:text-[#152A38]'
                                     }`}
                             >
                                 {item.label}
@@ -239,12 +232,13 @@ export default function Navbar() {
                         <div className="mt-3 border-t border-[#DDE7EB] pt-4">
                             {user ? (
                                 <div className="space-y-3">
-                                    {/* Mobile User Info */}
                                     <div className="flex items-center gap-3 rounded-2xl border border-[#DDE7EB] bg-[#F7FAF9] p-3">
                                         {user.image ? (
-                                            <img
+                                            <Image
                                                 src={user.image}
                                                 alt={user.name || 'User'}
+                                                width={40}
+                                                height={40}
                                                 className="h-10 w-10 rounded-full object-cover"
                                             />
                                         ) : (
@@ -268,36 +262,6 @@ export default function Navbar() {
                                         onPress={() => setIsMenuOpen(false)}
                                         className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#152A38] text-sm font-semibold text-white no-underline"
                                     >
-                                        <svg
-                                            className="h-4 w-4"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                        >
-                                            <path
-                                                d="M4 4H10V10H4V4Z"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                            <path
-                                                d="M14 4H20V10H14V4Z"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                            <path
-                                                d="M4 14H10V20H4V14Z"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                            <path
-                                                d="M14 14H20V20H14V14Z"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
                                         Dashboard
                                     </Link>
 

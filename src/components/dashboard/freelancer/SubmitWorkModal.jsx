@@ -4,11 +4,10 @@ import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const SubmitWorkModal = ({ task, freelancersId }) => {
+const SubmitWorkModal = ({ task, freelancersId, freelancersEmail, freelancersName }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     const router = useRouter();
 
-    console.log(task)
 
     const [loading, setLoading] = useState(false);
 
@@ -28,7 +27,9 @@ const SubmitWorkModal = ({ task, freelancersId }) => {
             body: JSON.stringify({
                 status: "completed",
                 deliverable_url: deliverableUrl,
-                completedBy: freelancersId
+                completedBy: freelancersId,
+                completedByEmail: freelancersEmail,
+                completedByName: freelancersName,
             }),
         });
 

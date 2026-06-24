@@ -9,23 +9,34 @@ const TopFreelancerCard = async ({ freelancer }) => {
         name,
         image,
         skills,
-        averageRating,
-        rating,
         hourlyRate,
     } = freelancer;
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const finishedJobsRes = await fetch(`${baseUrl}/api/finishedJobs/${_id}`);
+    const finishedJobsRes = await fetch(`${baseUrl}/api/finishedJobs/${_id}`, {
+        cache: 'no-store',
+    });
 
     const finishedJobs = await finishedJobsRes.json();
 
-    console.log('jojo', finishedJobs)
+    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${_id}`, {
+        cache: 'no-store',
+    });
 
+    const reviews = await reviewsRes.json();
 
-    const freelancerRating = averageRating || rating || 0;
-    const totalFinishedJobs = finishedJobs.length || 0;
+    const totalFinishedJobs = Array.isArray(finishedJobs)
+        ? finishedJobs.length
+        : 0;
 
+    const freelancerRating = Array.isArray(reviews) && reviews.length > 0
+        ? (
+            reviews.reduce((total, review) => {
+                return total + Number(review.rating || 0);
+            }, 0) / reviews.length
+        ).toFixed(1)
+        : 0;
 
     return (
         <div className="h-full overflow-hidden rounded-2xl border border-[#DDE7EB] bg-white shadow-md transition duration-300 hover:-translate-y-2">
@@ -44,14 +55,20 @@ const TopFreelancerCard = async ({ freelancer }) => {
                 </h3>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                    {skills?.map((skill) => (
-                        <span
-                            key={skill}
-                            className="rounded-full border border-[#DDE7EB] bg-[#F7FAF9] px-3 py-1 text-xs font-semibold text-[#52636C]"
-                        >
-                            {skill}
+                    {skills?.length > 0 ? (
+                        skills.map((skill) => (
+                            <span
+                                key={skill}
+                                className="rounded-full border border-[#DDE7EB] bg-[#F7FAF9] px-3 py-1 text-xs font-semibold text-[#52636C]"
+                            >
+                                {skill}
+                            </span>
+                        ))
+                    ) : (
+                        <span className="rounded-full border border-[#DDE7EB] bg-[#F7FAF9] px-3 py-1 text-xs font-semibold text-[#52636C]">
+                            No skills
                         </span>
-                    ))}
+                    )}
                 </div>
 
                 <div className="mt-6 flex items-center justify-between border-t border-[#DDE7EB] pt-5">

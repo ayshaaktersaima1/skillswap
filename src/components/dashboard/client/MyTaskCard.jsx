@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import DeleteTaskBtn from "./DeleteTaskBtn";
+import ReviewForm from "./ReviewForm";
 
 const statusStyles = {
     open: 'bg-green-50 text-green-700 border-green-200',
@@ -11,7 +12,6 @@ const statusStyles = {
 
 export default function MyTaskCard({ task }) {
     const status = task.status?.toLowerCase() || 'open';
-
 
     const statusLabel =
         status === 'in progress'
@@ -29,27 +29,6 @@ export default function MyTaskCard({ task }) {
         ? new Date(task.deadline).toLocaleDateString()
         : 'No deadline';
 
-
-    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-
-
-
-    // const handleEditTask = () => {
-
-    //     const taskId=task?._id;
-    //    const res = fetch(`${baseUrl}/api/my-tasks/${taskId}`,{
-    //     method:'PATCH',
-    //     headers:{
-    //         'content-type':'application/json'
-    //     },
-    //     body:JSON.stringify(r)
-
-
-    //    })
-
-    // }
-
-
     return (
         <article className="rounded-3xl border border-[#DDE7EB] bg-white p-6 shadow-sm transition hover:shadow-md">
             <div className="mb-5 flex items-start justify-between gap-4">
@@ -64,8 +43,7 @@ export default function MyTaskCard({ task }) {
                 </div>
 
                 <span
-                    className={`rounded-full border px-3 py-1 text-xs font-bold ${statusStyles[status] || statusStyles.open
-                        }`}
+                    className={`rounded-full border px-3 py-1 text-xs font-bold ${statusStyles[status] || statusStyles.open}`}
                 >
                     {statusLabel}
                 </span>
@@ -114,10 +92,16 @@ export default function MyTaskCard({ task }) {
                         Edit Task
                     </button>
                 )}
-                <DeleteTaskBtn task={task}
+
+                <DeleteTaskBtn
+                    task={task}
                     canDelete={canDelete}
-                ></DeleteTaskBtn>
+                />
             </div>
+
+            {status === 'completed' && (
+                <ReviewForm task={task} />
+            )}
 
             {!canEdit && (
                 <p className="mt-3 text-xs leading-5 text-[#52636C]">

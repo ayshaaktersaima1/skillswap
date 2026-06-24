@@ -12,6 +12,8 @@ const ActiveProjectsPage = async () => {
     });
 
     const freelancersId = session?.user?.id;
+    const freelancersEmail = session?.user?.email;
+    const freelancersName = session?.user?.name;
 
     const res = await fetch(`${baseUrl}/api/myProposals/${freelancersId}?status=accepted`);
     const acceptedProjects = await res.json();
@@ -38,6 +40,8 @@ const ActiveProjectsPage = async () => {
                         key={project._id}
                         project={project}
                         freelancersId={freelancersId}
+                        freelancersEmail={freelancersEmail}
+                        freelancersName={freelancersName}
                     />
                 ))}
             </div>

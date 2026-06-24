@@ -1,7 +1,7 @@
 import React from 'react';
 import SubmitWorkModal from './SubmitWorkModal';
 
-const ActiveProjectCard = async ({ project, freelancersId }) => {
+const ActiveProjectCard = async ({ project, freelancersId, freelancersEmail, freelancersName }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const taskRes = await fetch(`${baseUrl}/api/tasks/${project.taskId}`, {
@@ -71,7 +71,7 @@ const ActiveProjectCard = async ({ project, freelancersId }) => {
 
             <div className="mt-6">
                 {task?.status === 'in progress' && (
-                    <SubmitWorkModal task={task} freelancersId={freelancersId}></SubmitWorkModal>
+                    <SubmitWorkModal task={task} freelancersId={freelancersId} freelancersEmail={freelancersEmail} freelancersName={freelancersName}></SubmitWorkModal>
                 )}
 
                 {task?.status === 'completed' && task?.deliverable_url && (
