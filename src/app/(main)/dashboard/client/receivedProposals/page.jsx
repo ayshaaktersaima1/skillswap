@@ -7,12 +7,18 @@ const ReceivedProposalsPage = async () => {
         headers: await headers(),
     });
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const clientId = session?.user?.id;
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const res = await fetch(`${baseUrl}/api/receivedProposals/${clientId}`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
 
     const receivedProposals = res.ok ? await res.json() : [];

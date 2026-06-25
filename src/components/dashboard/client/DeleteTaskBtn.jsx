@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { AlertDialog, Button } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
@@ -9,10 +10,14 @@ export default function DeleteTaskBtn({ task, canDelete }) {
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     const handleDelete = async () => {
+
+        const { data: tokenData } = await authClient.token();
+
         const res = await fetch(`${baseUrl}/api/tasks/${task?._id}`, {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             }
         });
         router.refresh();

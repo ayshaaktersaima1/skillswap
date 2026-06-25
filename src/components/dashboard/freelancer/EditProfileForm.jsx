@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import {
     Button,
     Description,
@@ -20,10 +21,14 @@ const EditProfileForm = ({ freelancer }) => {
         const formData = new FormData(e.currentTarget);
         const freelancersInfo = Object.fromEntries(formData.entries());
 
+        const { data: tokenData } = await authClient.token();
+
+
         const res = await fetch(`${baseUrl}/api/freelancerInfo/${freelancer?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify(freelancersInfo)
 

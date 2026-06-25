@@ -8,12 +8,18 @@ const MyProposals = async () => {
         headers: await headers(),
     });
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const freelancersId = session?.user?.id;
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const res = await fetch(`${baseUrl}/api/myProposals/${freelancersId}`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
 
     const myProposals = await res.json();

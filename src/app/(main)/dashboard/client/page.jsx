@@ -9,14 +9,25 @@ const ClientDashboardHomepage = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     })
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
     const clientId = session?.user?.id;
 
-    const tasksRes = await fetch(`${baseUrl}/api/my-tasks/${clientId}`);
+    const tasksRes = await fetch(`${baseUrl}/api/my-tasks/${clientId}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
 
     const tasks = await tasksRes.json();
 
-    const PaymentRes = await fetch(`${baseUrl}/api/paymentInfo/${clientId}`);
+    const PaymentRes = await fetch(`${baseUrl}/api/paymentInfo/${clientId}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const paymentInfo = await PaymentRes.json();
 
     const totalTasks = tasks.length;

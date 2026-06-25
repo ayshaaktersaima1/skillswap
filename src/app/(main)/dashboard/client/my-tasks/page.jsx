@@ -9,6 +9,9 @@ const MyTasks = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     })
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
 
     const clientId = session?.user?.id;
@@ -24,7 +27,9 @@ const MyTasks = async () => {
     }
 
     const res = await fetch(`${baseUrl}/api/my-tasks/${clientId}`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
 
     const tasks = await res.json();

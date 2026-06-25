@@ -1,15 +1,20 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 
 export function RejectProposal({ proposal }) {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const handleRejectProposal = async (proposal) => {
+
+        const { data: tokenData } = await authClient.token();
+
         const res = await fetch(`${baseUrl}/api/rejectingProposal/${proposal?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify({ status: 'rejected' }),
         });

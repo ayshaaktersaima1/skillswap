@@ -1,5 +1,6 @@
 'use client'
 
+import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 
 const ReviewForm = ({ task }) => {
@@ -17,18 +18,21 @@ const ReviewForm = ({ task }) => {
         const reviewInfo = {
             task_id: task?._id,
             reviewer_email: task?.clientEmail,
-            reviewer_id: task?.completedBy,
+            reviewer_id: task?.clientId,
             rating: Number(rating),
             comment,
             completedByEmail: task?.completedByEmail,
             completedByName: task?.completedByName,
             created_at: new Date().toISOString(),
         };
+        const { data: tokenData } = await authClient.token();
 
         const res = await fetch(`${baseUrl}/api/reviews`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
+
             },
             body: JSON.stringify(reviewInfo),
         });

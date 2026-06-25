@@ -1,10 +1,18 @@
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import React from 'react';
 
 const AdminOverview = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const usersRes = await fetch(`${baseUrl}/api/users`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
     const users = await usersRes.json();
 
@@ -14,7 +22,9 @@ const AdminOverview = async () => {
     const tasks = await tasksRes.json();
 
     const paymentsRes = await fetch(`${baseUrl}/api/payments`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
     const payments = await paymentsRes.json();
 

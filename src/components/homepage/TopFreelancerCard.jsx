@@ -1,3 +1,4 @@
+import { auth } from '@/lib/auth';
 import { Button } from '@heroui/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,15 +15,13 @@ const TopFreelancerCard = async ({ freelancer }) => {
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const finishedJobsRes = await fetch(`${baseUrl}/api/finishedJobs/${_id}`, {
-        cache: 'no-store',
-    });
+
+
+    const finishedJobsRes = await fetch(`${baseUrl}/api/finishedJobs/${_id}`);
 
     const finishedJobs = await finishedJobsRes.json();
 
-    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${_id}`, {
-        cache: 'no-store',
-    });
+    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${_id}`);
 
     const reviews = await reviewsRes.json();
 

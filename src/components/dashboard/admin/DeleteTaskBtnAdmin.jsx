@@ -1,14 +1,22 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { AlertDialog, Button } from '@heroui/react';
 import React from 'react';
 
 const DeleteTaskBtnAdmin = ({ task }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
+
     const handleDelete = async () => {
+
+        const { data: tokenData } = await authClient.token();
         const res = await fetch(`${baseUrl}/api/tasks/${task?._id}`, {
             method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
+            },
         });
 
         if (res.ok) {

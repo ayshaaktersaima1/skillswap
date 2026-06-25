@@ -1,3 +1,4 @@
+import Footer from '@/components/homepage/Footer';
 import Navbar from '@/components/homepage/Navbar';
 import React from 'react';
 
@@ -8,6 +9,7 @@ const layout = ({ children }) => {
             <main>
                 {children}
             </main>
+            <Footer></Footer>
         </div>
     );
 };

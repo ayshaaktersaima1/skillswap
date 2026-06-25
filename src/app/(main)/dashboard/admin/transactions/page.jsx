@@ -1,11 +1,21 @@
 import TransactionTableRow from '@/components/dashboard/admin/TransactionTableRow';
+import { auth } from '@/lib/auth';
 import { Table } from '@heroui/react';
+import { headers } from 'next/headers';
 import React from 'react';
 
 const TransactionsAdmin = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const res = await fetch(`${baseUrl}/api/payments`);
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
+    const res = await fetch(`${baseUrl}/api/payments`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
 
     const payments = await res.json();
 

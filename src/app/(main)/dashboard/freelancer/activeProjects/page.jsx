@@ -11,11 +11,19 @@ const ActiveProjectsPage = async () => {
         headers: await headers()
     });
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const freelancersId = session?.user?.id;
     const freelancersEmail = session?.user?.email;
     const freelancersName = session?.user?.name;
 
-    const res = await fetch(`${baseUrl}/api/myProposals/${freelancersId}?status=accepted`);
+    const res = await fetch(`${baseUrl}/api/myProposals/${freelancersId}?status=accepted`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const acceptedProjects = await res.json();
 
 

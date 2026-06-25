@@ -24,12 +24,13 @@ const UpdateTaskForm = ({ task }) => {
 
         taskInfo.budget = Number(taskInfo.budget);
 
-        // const { data: tokenData } = await authClient.token();
+        const { data: tokenData } = await authClient.token();
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/tasks/${_id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify(taskInfo),
         });

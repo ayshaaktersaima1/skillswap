@@ -10,13 +10,25 @@ const FreelancerDashboardHomePage = async () => {
         headers: await headers()
     });
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const freelancersId = session?.user?.id;
 
-    const proposalRes = await fetch(`${baseUrl}/api/myProposals/${freelancersId}`);
+    const proposalRes = await fetch(`${baseUrl}/api/myProposals/${freelancersId}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const proposalData = await proposalRes.json();
 
 
-    const paymentRes = await fetch(`${baseUrl}/api/paymentInfoFreelancer/${freelancersId}`);
+    const paymentRes = await fetch(`${baseUrl}/api/paymentInfoFreelancer/${freelancersId}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const paymentInfo = await paymentRes.json();
 
     const totalEarning = paymentInfo.reduce((total, payment) => {

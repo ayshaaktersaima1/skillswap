@@ -4,9 +4,9 @@ import React from 'react';
 const FreelancersPage = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const res = await fetch(`${baseUrl}/api/freelancers`, {
-        cache: 'no-store',
-    });
+
+
+    const res = await fetch(`${baseUrl}/api/freelancers`);
 
     const freelancers = await res.json();
 

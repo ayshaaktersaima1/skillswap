@@ -2,16 +2,18 @@
 
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
     const router = useRouter();
+
+    const [applied, setApplied] = useState(checkAlreadyApplied);
+
     const { data: session } = authClient.useSession();
 
     const freelancerEmail = session?.user?.email || '';
     const freelancerId = session?.user?.id || '';
     const freelancerName = session?.user?.name || '';
-
-    // console.log(freelancerId)
 
     const handleSubmitProposal = async (e) => {
         e.preventDefault();
@@ -23,18 +25,22 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
         proposalInfo.estimatedDays = Number(proposalInfo.estimatedDays);
         proposalInfo.status = 'pending';
         proposalInfo.createdAt = new Date().toISOString();
+
         proposalInfo.freelancersId = freelancerId;
-        proposalInfo.taskTitle = taskTitle;
-        proposalInfo.clientId = clientId;
+        proposalInfo.freelancerEmail = freelancerEmail;
         proposalInfo.freelancerName = freelancerName;
 
+        proposalInfo.taskId = taskId;
+        proposalInfo.taskTitle = taskTitle;
+        proposalInfo.clientId = clientId;
 
-        console.log(proposalInfo)
+        const { data: tokenData } = await authClient.token();
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/proposals`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`,
             },
             body: JSON.stringify(proposalInfo),
         });
@@ -43,16 +49,23 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
 
         if (!res.ok) {
             alert(data.message || 'Failed to submit proposal');
+
+            if (res.status === 409) {
+                setApplied(true);
+                router.refresh();
+            }
+
             return;
         }
 
         alert('Proposal submitted successfully');
-        router.push('/dashboard/freelancer/proposals');
+        setApplied(true);
+        router.refresh();
     };
 
     return (
         <section className="rounded-3xl border border-[#DDE7EB] bg-white p-6 shadow-sm">
-            {checkAlreadyApplied ? (
+            {applied ? (
                 <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
                     <h3 className="text-lg font-bold text-green-700">
                         You already applied for this task
@@ -95,7 +108,7 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
                             <input
                                 type="email"
                                 name="freelancerEmail"
-                                defaultValue={freelancerEmail}
+                                value={freelancerEmail}
                                 readOnly
                                 required
                                 className="h-12 w-full rounded-xl border border-[#DDE7EB] bg-[#F7FAF9] px-4 text-sm font-medium text-[#52636C] outline-none"

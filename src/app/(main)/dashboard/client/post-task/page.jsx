@@ -10,6 +10,7 @@ const PostTask = () => {
 
     const ClientId = session?.user?.id;
     const ClientEmail = session?.user?.email;
+    const ClientImage = session?.user?.email;
 
     const handlePostTask = async (e) => {
         e.preventDefault();
@@ -30,24 +31,17 @@ const PostTask = () => {
             clientId: ClientId,
             clientEmail: ClientEmail,
         };
-
+        const { data: tokenData } = await authClient.token();
 
         const res = await fetch(`${baseUrl}/api/tasks`, {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify(taskData)
         })
 
-        // Later connect this with your backend
-        // await fetch('http://localhost:5000/tasks', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(taskData),
-        // });
 
         setLoading(false);
         form.reset();

@@ -4,9 +4,15 @@ import React from 'react';
 const Users = async () => {
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
-
-    const res = await fetch(`${baseUrl}/api/users`);
+    const res = await fetch(`${baseUrl}/api/users`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
 
     const users = await res.json();
 

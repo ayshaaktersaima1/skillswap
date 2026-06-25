@@ -14,19 +14,19 @@ const ManageUsersTable = ({ users }) => {
         const status = user?.isBlocked;
         window.location.reload();
 
+        const { data: tokenData } = await authClient.token();
+
+
 
         const res = await fetch(`${baseUrl}/api/users/${user?._id}`, {
             method: 'PATCH',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify({ isBlocked: !status })
         })
-        // alert('done')
 
-        // if (res.ok) {
-        //     window.location.reload();
-        // }
     };
 
     return (

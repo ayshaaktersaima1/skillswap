@@ -1,15 +1,21 @@
 'use client'
+import { authClient } from '@/lib/auth-client';
 import React from 'react';
 
 const AcceptProposal = ({ proposal }) => {
 
 
+
+
     const handleAccept = async (proposal) => {
+
+        const { data: tokenData } = await authClient.token();
 
         const res = await fetch('/api/payment', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify({
                 proposalId: proposal._id,

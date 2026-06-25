@@ -4,9 +4,9 @@ import LatestFeaturedTaskCard from "@/components/homepage/LatestFeaturedTaskCard
 const BrowseTasks = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const res = await fetch(`${baseUrl}/api/tasks?status=open`, {
-        cache: 'no-store',
-    });
+
+
+    const res = await fetch(`${baseUrl}/api/tasks?status=open`);
 
     const tasks = await res.json();
 

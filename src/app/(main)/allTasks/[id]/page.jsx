@@ -8,9 +8,9 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    const res = await fetch(`${baseUrl}/api/tasks/${id}`, {
-        cache: 'no-store',
-    });
+
+
+    const res = await fetch(`${baseUrl}/api/tasks/${id}`);
 
     const taskDetails = await res.json();
 
@@ -22,10 +22,16 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
     const role = session?.user?.role;
 
     let checkAlreadyApplied = { alreadyApplied: false };
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
 
     if (role === 'freelancer') {
         const checkRes = await fetch(`${baseUrl}/api/checkProposal/${id}/${freelancersId}`, {
-            cache: 'no-store',
+            headers: {
+                authorization: `Bearer ${token}`
+            }
         });
 
         checkAlreadyApplied = await checkRes.json();

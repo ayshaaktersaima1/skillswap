@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,11 +19,15 @@ const SubmitWorkModal = ({ task, freelancersId, freelancersEmail, freelancersNam
         const deliverableUrl = form.deliverable_url.value;
 
         setLoading(true);
+        const { data: tokenData } = await authClient.token();
+
 
         const res = await fetch(`${baseUrl}/api/tasks/${task?._id}`, {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
+                authorization: `Bearer ${tokenData?.token}`
+
             },
             body: JSON.stringify({
                 status: "completed",

@@ -10,9 +10,17 @@ const EarningsOfFreelancer = async () => {
         headers: await headers()
     });
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
     const freelancersId = session?.user?.id;
 
-    const paymentRes = await fetch(`${baseUrl}/api/paymentInfoFreelancer/${freelancersId}`);
+    const paymentRes = await fetch(`${baseUrl}/api/paymentInfoFreelancer/${freelancersId}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const payments = await paymentRes.json();
 
 

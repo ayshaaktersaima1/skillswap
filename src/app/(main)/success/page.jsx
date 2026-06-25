@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { stripe } from '@/lib/stripe';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 export default async function Success({ searchParams }) {
     const { session_id } = await searchParams;
@@ -19,6 +21,10 @@ export default async function Success({ searchParams }) {
 
     const taskTitle = session?.metadata?.taskTitle || 'Accepted Task';
     const freelancerName = session?.metadata?.freelancerName || 'Freelancer';
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+
 
     if (status === 'open') {
         redirect('/dashboard/client/proposals');
@@ -30,6 +36,7 @@ export default async function Success({ searchParams }) {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
                 client_id: session?.metadata?.clientId,

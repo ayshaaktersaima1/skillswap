@@ -11,6 +11,8 @@ const FreelancersProfile = async () => {
         headers: await headers(),
     });
 
+
+
     const freelancersId = session?.user?.id;
 
     const res = await fetch(`${baseUrl}/api/freelancerInfo/${freelancersId}`);

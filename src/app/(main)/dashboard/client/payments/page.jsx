@@ -9,11 +9,16 @@ const ClientPayments = async () => {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
     const clientId = session?.user?.id;
 
     const res = await fetch(`${baseUrl}/api/paymentInfo/${clientId}`, {
-        cache: 'no-store',
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
 
     const payments = await res.json();
