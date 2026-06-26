@@ -1,14 +1,25 @@
 import FreelancerTaskCard from "@/components/dashboard/freelancer/FreelancerTaskCard";
 import LatestFeaturedTaskCard from "@/components/homepage/LatestFeaturedTaskCard";
+import { PaginationBasic } from "@/components/PageNo";
 
-const BrowseTasks = async () => {
+const BrowseTasks = async ({ searchParams }) => {
+
+    let { page } = await searchParams;
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 
 
-    const res = await fetch(`${baseUrl}/api/tasks?status=open`);
+    if (!page) {
+        page = 1;
+    }
 
-    const tasks = await res.json();
+    const res = await fetch(`${baseUrl}/api/tasks?status=open&page=${page}`);
+
+    const data = await res.json();
+    const tasks = data?.data;
+    const pageNo = data?.page;
+    const totalPage = data?.totalPage;
+
 
     return (
         <section className="bg-[#F7FAF9] px-5 py-12 md:px-8 md:py-16">
@@ -34,14 +45,19 @@ const BrowseTasks = async () => {
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {tasks.map((task) => (
-                            <LatestFeaturedTaskCard
-                                key={task._id}
-                                task={task}
-                            />
-                        ))}
+                    <div>
+                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            {tasks.map((task) => (
+                                <LatestFeaturedTaskCard
+                                    key={task._id}
+                                    task={task}
+                                />
+                            ))}
+                        </div>
+                        <PaginationBasic pageNo={pageNo} totalPage={totalPage}></PaginationBasic>
+
                     </div>
+
                 )}
             </div>
         </section>

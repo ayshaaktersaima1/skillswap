@@ -11,7 +11,9 @@ export default async function LatestFeaturedTasks() {
 
     const tasks = await res.json();
 
-    const latestTasks = tasks.slice(0, 3);
+    const latest = tasks?.data;
+
+    const latestTasks = latest.slice(0, 6);
 
     return (
         <section className="bg-[#F7FAF9] px-5 py-16 md:px-8 md:py-24">
