@@ -1,11 +1,14 @@
 import FreelancerTaskCard from "@/components/dashboard/freelancer/FreelancerTaskCard";
 import LatestFeaturedTaskCard from "@/components/homepage/LatestFeaturedTaskCard";
 import { PaginationBasic } from "@/components/PageNo";
+import SearchBtn from "@/components/SearchBtn";
 
 const BrowseTasks = async ({ searchParams }) => {
 
     let { page } = await searchParams;
+    const params = await searchParams;
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+    const search = params?.search || "";
 
 
 
@@ -13,7 +16,7 @@ const BrowseTasks = async ({ searchParams }) => {
         page = 1;
     }
 
-    const res = await fetch(`${baseUrl}/api/tasks?status=open&page=${page}`);
+    const res = await fetch(`${baseUrl}/api/tasks?status=open&page=${page}&search=${search}`);
 
     const data = await res.json();
     const tasks = data?.data;
@@ -32,6 +35,10 @@ const BrowseTasks = async ({ searchParams }) => {
                     <p className="mt-2 max-w-2xl text-sm leading-6 text-[#52636C]">
                         Explore open client tasks and send proposals for the work you want.
                     </p>
+                </div>
+
+                <div>
+                    <SearchBtn></SearchBtn>
                 </div>
 
                 {tasks.length === 0 ? (
