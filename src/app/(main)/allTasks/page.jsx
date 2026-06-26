@@ -1,4 +1,5 @@
 import FreelancerTaskCard from "@/components/dashboard/freelancer/FreelancerTaskCard";
+import { Filter } from "@/components/Filter";
 import LatestFeaturedTaskCard from "@/components/homepage/LatestFeaturedTaskCard";
 import { PaginationBasic } from "@/components/PageNo";
 import SearchBtn from "@/components/SearchBtn";
@@ -9,6 +10,8 @@ const BrowseTasks = async ({ searchParams }) => {
     const params = await searchParams;
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     const search = params?.search || "";
+    const category = params?.category || '';
+
 
 
 
@@ -16,9 +19,14 @@ const BrowseTasks = async ({ searchParams }) => {
         page = 1;
     }
 
-    const res = await fetch(`${baseUrl}/api/tasks?status=open&page=${page}&search=${search}`);
+    const res = await fetch(`${baseUrl}/api/tasks?status=open&page=${page}&search=${search}&category=${category}`);
 
     const data = await res.json();
+
+    const allTasksRes = await fetch(`${baseUrl}/api/tasks?status=open`);
+
+    const allTasksData = await allTasksRes.json();
+    const allTasks = allTasksData?.data;
     const tasks = data?.data;
     const pageNo = data?.page;
     const totalPage = data?.totalPage;
@@ -37,8 +45,9 @@ const BrowseTasks = async ({ searchParams }) => {
                     </p>
                 </div>
 
-                <div>
+                <div className="flex flex-col md:flex-row items-start gap-2 md:gap-8 mb-5">
                     <SearchBtn></SearchBtn>
+                    <Filter allTasks={allTasks}></Filter>
                 </div>
 
                 {tasks.length === 0 ? (
