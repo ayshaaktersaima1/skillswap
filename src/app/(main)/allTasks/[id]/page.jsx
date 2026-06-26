@@ -2,15 +2,22 @@ import ProposalForm from '@/components/dashboard/freelancer/ProposalForm';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
+export const dynamic = 'force-dynamic';
 
 const TaskDetailsAndProposalSendingPages = async ({ params }) => {
     const { id } = await params;
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
+    const res = await fetch(`${baseUrl}/api/tasks/${id}`, {
+        cache: 'no-store',
+    });
 
-
-    const res = await fetch(`${baseUrl}/api/tasks/${id}`);
+    if (!res.ok) {
+        notFound();
+    }
 
     const taskDetails = await res.json();
 
@@ -19,22 +26,29 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
     });
 
     const freelancersId = session?.user?.id;
-    const role = session?.user?.role;
+    const role = session?.user?.role?.toLowerCase();
 
     let checkAlreadyApplied = { alreadyApplied: false };
-    const { token } = await auth.api.getToken({
-        headers: await headers()
-    })
 
-
-    if (role === 'freelancer') {
-        const checkRes = await fetch(`${baseUrl}/api/checkProposal/${id}/${freelancersId}`, {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
+    if (role === 'freelancer' && freelancersId) {
+        const tokenData = await auth.api.getToken({
+            headers: await headers(),
         });
 
-        checkAlreadyApplied = await checkRes.json();
+        const token = tokenData?.token;
+
+        if (token) {
+            const checkRes = await fetch(`${baseUrl}/api/checkProposal/${id}/${freelancersId}`, {
+                cache: 'no-store',
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (checkRes.ok) {
+                checkAlreadyApplied = await checkRes.json();
+            }
+        }
     }
 
     const formattedDeadline = taskDetails?.deadline
@@ -44,7 +58,6 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
     return (
         <section className="bg-[#F7FAF9] px-5 py-12 md:px-8 md:py-16">
             <div className="mx-auto w-[95%] md:w-[90%]">
-                {/* Header */}
                 <div className="mb-8">
                     <p className="text-sm font-semibold uppercase tracking-widest text-[#52636C]">
                         Task Details
@@ -66,7 +79,6 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
                             : 'grid grid-cols-1'
                     }
                 >
-                    {/* Task Details Card */}
                     <section className="rounded-3xl border border-[#DDE7EB] bg-white p-6 shadow-sm">
                         <div className="mb-5 flex items-start justify-between gap-4">
                             <div>
@@ -118,14 +130,13 @@ const TaskDetailsAndProposalSendingPages = async ({ params }) => {
                         </div>
 
                         <Link
-                            href="/tasks"
+                            href="/allTasks"
                             className="mt-6 inline-flex h-11 items-center justify-center rounded-xl border border-[#DDE7EB] bg-white px-5 text-sm font-semibold text-[#152A38] no-underline transition hover:bg-[#F7FAF9]"
                         >
                             Back to Tasks
                         </Link>
                     </section>
 
-                    {/* Proposal Form only for freelancer */}
                     {role === 'freelancer' && (
                         <ProposalForm
                             taskTitle={taskDetails?.title}
