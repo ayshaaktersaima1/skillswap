@@ -6,7 +6,8 @@ export default async function TopFreelancers() {
 
     const res = await fetch(`${baseUrl}/api/freelancers`);
 
-    const users = await res.json();
+    const allUsers = await res.json();
+    const users = allUsers.slice(0, 6);
 
 
     return (
@@ -36,7 +37,7 @@ export default async function TopFreelancers() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     {users.length === 0 ? (
                         <div className="rounded-2xl border border-[#DDE7EB] bg-white p-8 text-center shadow-md md:col-span-2 xl:col-span-4">
                             <h3 className="text-xl font-bold text-[#10202B]">

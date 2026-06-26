@@ -31,58 +31,56 @@ const ReviewCard = async ({ rev }) => {
         : 'No date';
 
     return (
-        <article className="flex min-h-72 flex-col justify-between rounded-3xl border border-[#DDE7EB] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-            <div>
-                <div className="mb-6 flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                        <div className="relative h-11 w-11 overflow-hidden rounded-full bg-[#152A38]">
-                            {clientImage ? (
-                                <Image
-                                    src={clientImage}
-                                    alt={clientEmail}
-                                    fill
-                                    className="object-cover object-center"
-                                />
-                            ) : (
-                                <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white">
-                                    {clientInitial}
-                                </div>
-                            )}
-                        </div>
+        <article className="relative w-full max-w-full overflow-hidden rounded-3xl border border-[#DDE7EB] bg-white p-5 shadow-sm md:p-6">
+            <span className="absolute right-5 top-4 text-4xl font-bold leading-none text-[#152A38]/15">
+                ”
+            </span>
 
-                        <div>
-                            <h3 className="text-sm font-bold text-[#10202B]">
-                                {clientEmail}
-                            </h3>
-
-                            <p className="mt-1 text-xs font-medium text-[#52636C]">
-                                Client
-                            </p>
-                        </div>
+            <div className="relative z-10">
+                <div className="mb-6 flex w-full max-w-full items-center gap-3 pr-8">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-[#152A38]">
+                        {clientImage ? (
+                            <Image
+                                src={clientImage}
+                                alt={clientEmail}
+                                fill
+                                className="object-cover object-center"
+                            />
+                        ) : (
+                            <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white">
+                                {clientInitial}
+                            </div>
+                        )}
                     </div>
 
-                    <div className="text-5xl font-bold leading-none text-[#152A38]">
-                        ”
+                    <div className="min-w-0 flex-1 overflow-hidden">
+                        <h3 className="max-w-full break-all text-sm font-bold leading-5 text-[#10202B]">
+                            {clientEmail}
+                        </h3>
+
+                        <p className="mt-1 text-xs font-medium text-[#52636C]">
+                            Client
+                        </p>
                     </div>
                 </div>
 
-                <p className="text-sm italic leading-6 text-[#52636C]">
+                <p className="min-h-20 max-w-full break-words text-sm italic leading-6 text-[#52636C]">
                     {comment || 'No review comment.'}
                 </p>
-            </div>
 
-            <div className="mt-7">
-                <div className="mb-4 flex items-center gap-1 text-sm text-[#152A38]">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <span key={star}>
-                            {star <= Number(rating || 0) ? '★' : '☆'}
-                        </span>
-                    ))}
+                <div className="mt-7">
+                    <div className="mb-4 flex items-center gap-1 text-sm text-[#152A38]">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <span key={star}>
+                                {star <= Number(rating || 0) ? '★' : '☆'}
+                            </span>
+                        ))}
+                    </div>
+
+                    <p className="text-xs font-bold text-[#52636C]">
+                        {reviewDate}
+                    </p>
                 </div>
-
-                <p className="text-xs font-bold text-[#52636C]">
-                    {reviewDate}
-                </p>
             </div>
         </article>
     );
