@@ -16,14 +16,13 @@ export default function LoginPage() {
         const form = e.currentTarget;
         const userEmail = form.email.value;
 
-        const res = await fetch(`${baseUrl}/api/users/${userEmail}`);
+        const res = await fetch(`${baseUrl}/api/users-for-status/${userEmail}`);
 
-        const isBlocked = await res.json();
+        const blockStatus = await res.json();
 
-        if (isBlocked === true) {
-            alert('You are blocked');
+        if (blockStatus?.isBlocked === true) {
+            alert('Your account is blocked');
             return;
-
         }
         else {
             const loginData = {
@@ -35,9 +34,30 @@ export default function LoginPage() {
 
                 email: loginData?.email,
                 password: loginData?.password,
-                callbackURL: "/",
 
             })
+
+
+            if (error) {
+                alert(error.message || 'Invalid email or password');
+                return;
+            }
+
+            if (!data?.user) {
+                alert('Invalid email or password');
+                return;
+            }
+
+
+
+            const role = data?.user?.role;
+            if (role === 'freelancer') {
+                window.location.href = '/dashboard/freelancer';
+            } else if (role === 'admin') {
+                window.location.href = '/dashboard/admin';
+            } else {
+                window.location.href = '/';
+            }
 
         }
 
