@@ -19,7 +19,9 @@ const AdminOverview = async () => {
     const tasksRes = await fetch(`${baseUrl}/api/tasks`, {
         cache: 'no-store',
     });
-    const tasks = await tasksRes.json();
+
+    const data = await tasksRes.json();
+    const tasks = data?.data;
 
     const paymentsRes = await fetch(`${baseUrl}/api/payments`, {
         headers: {

@@ -10,6 +10,7 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
     const [applied, setApplied] = useState(checkAlreadyApplied);
 
     const { data: session } = authClient.useSession();
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     const freelancerEmail = session?.user?.email || '';
     const freelancerId = session?.user?.id || '';
@@ -36,7 +37,7 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
 
         const { data: tokenData } = await authClient.token();
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/proposals`, {
+        const res = await fetch(`${baseUrl}/api/proposals`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

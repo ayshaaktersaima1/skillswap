@@ -6,6 +6,7 @@ import { headers } from 'next/headers';
 
 export default async function Success({ searchParams }) {
     const { session_id } = await searchParams;
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
     if (!session_id) {
         throw new Error('Please provide a valid session_id');
@@ -32,7 +33,7 @@ export default async function Success({ searchParams }) {
 
     if (status === 'complete') {
 
-        await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/payments`, {
+        await fetch(`${baseUrl}/api/payments`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
