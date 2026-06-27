@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Project Name
 
-## Getting Started
+**SkillSwap — Freelance Micro-Task Platform**
 
-First, run the development server:
+## Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+SkillSwap is a full-stack freelance micro-task marketplace where clients can post small tasks and freelancers can apply for those tasks through proposals. The platform is built to make short-term freelance work easier to manage for both clients and freelancers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Clients can create tasks, review proposals, accept a freelancer, and complete payment through Stripe Checkout. Freelancers can browse available tasks, submit proposals, manage their accepted work, submit deliverables, and update their public profile. Admins can manage users, monitor tasks, and view transaction history from a separate admin dashboard.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The project includes role-based dashboards for Clients, Freelancers, and Admins, with protected routes, authentication, payments, task management, proposal management, and review features.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live Website Link
 
-## Learn More
+https://skillswap-eta-eight.vercel.app/
 
-To learn more about Next.js, take a look at the following resources:
+## Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Clients can post new micro-tasks with title, category, budget, deadline, and description.
+* Freelancers can browse open tasks and send proposals with budget, estimated days, and cover notes.
+* A freelancer can apply only once for the same task.
+* Clients can accept or reject proposals from their dashboard.
+* Stripe Checkout is integrated for secure task payments after accepting a proposal.
+* Task status changes based on progress, such as Open, In Progress, and Completed.
+* Freelancers can submit deliverable links after finishing the assigned work.
+* Clients can leave ratings and reviews after work is completed.
+* Separate dashboards are available for Client, Freelancer, and Admin roles.
+* Admin can manage users, block or unblock accounts, manage tasks, and view payment history.
+* Blocked users are prevented from logging in.
+* Browse Tasks page includes title search, category filtering and server-side pagination.
+* Home page shows dynamic content such as latest tasks, top freelancers, platform stats and client reviews.
+* Fully responsive layout for mobile, tablet and desktop devices.
+* Custom 404 page and protected dashboard routing are included.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## NPM Packages Used
 
-## Deploy on Vercel
+### Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* next
+* react
+* react-dom
+* @heroui/react
+* better-auth
+* stripe
+* react-icons
+* @iconify/react
+* tailwindcss
+* postcss
+* eslint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Backend
+
+* express
+* cors
+* dotenv
+* mongodb
+* jose-cjs
+* stripe
+* nodemon
