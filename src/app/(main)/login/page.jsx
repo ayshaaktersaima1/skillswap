@@ -22,7 +22,7 @@ export default function LoginPage() {
         const blockStatus = await res.json();
 
         if (blockStatus?.isBlocked === true) {
-            alert('Your account is blocked');
+            toast.warning('Your account is blocked');
             return;
         }
         else {

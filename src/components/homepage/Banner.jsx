@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { authClient } from '@/lib/auth-client';
 
 export default function Banner() {
@@ -13,7 +14,17 @@ export default function Banner() {
     const isFreelancer = user && role === 'freelancer';
 
     return (
-        <section className="relative flex min-h-[560px] items-center justify-center overflow-hidden bg-[url('/assets/banner.jpg')] bg-cover bg-center px-5 py-16 md:min-h-[650px] md:px-8">
+        <section className="relative flex h-screen items-center justify-center overflow-hidden bg-[#10202B] px-5 py-16 md:px-8">
+            <motion.div
+                initial={{ scale: 1.28 }}
+                animate={{ scale: 1 }}
+                transition={{
+                    duration: 10,
+                    ease: 'easeOut',
+                }}
+                className="absolute -inset-10 bg-[url('/assets/banner.jpg')] bg-cover bg-center"
+            />
+
             <div className="absolute inset-0 bg-black/70"></div>
 
             <div className="relative z-10 mx-auto flex w-[95%] max-w-5xl flex-col items-center justify-center text-center md:w-[90%]">
@@ -23,9 +34,17 @@ export default function Banner() {
                     </p>
                 </div>
 
-                <h1 className="max-w-4xl text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
+                <motion.h1
+                    initial={{ opacity: 0, y: 35 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        duration: 0.8,
+                        ease: 'easeOut',
+                    }}
+                    className="max-w-4xl text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl"
+                >
                     Get your tasks done by skilled freelancers
-                </h1>
+                </motion.h1>
 
                 <p className="mt-6 max-w-2xl text-sm leading-7 text-white/75 md:text-lg md:leading-8">
                     Post small tasks, compare proposals, and connect with trusted
