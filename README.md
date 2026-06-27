@@ -6,9 +6,9 @@
 
 SkillSwap is a full-stack freelance micro-task marketplace where clients can post small tasks and freelancers can apply for those tasks through proposals. The platform is built to make short-term freelance work easier to manage for both clients and freelancers.
 
-Clients can create tasks, review proposals, accept a freelancer, and complete payment through Stripe Checkout. Freelancers can browse available tasks, submit proposals, manage their accepted work, submit deliverables, and update their public profile. Admins can manage users, monitor tasks, and view transaction history from a separate admin dashboard.
+Clients can create tasks, review proposals, accept a freelancer, and complete payment through Stripe Checkout. Freelancers can browse available tasks, submit proposals, manage their accepted work, submit deliverables and update their public profile. Admins can manage users, monitor tasks, and view transaction history from a separate admin dashboard.
 
-The project includes role-based dashboards for Clients, Freelancers, and Admins, with protected routes, authentication, payments, task management, proposal management, and review features.
+The project includes role-based dashboards for Clients, Freelancers and Admins with protected routes, authentication, payments, task management, proposal management and review features.
 
 ## Live Website Link
 
@@ -24,8 +24,8 @@ https://skillswap-eta-eight.vercel.app/
 * Task status changes based on progress, such as Open, In Progress, and Completed.
 * Freelancers can submit deliverable links after finishing the assigned work.
 * Clients can leave ratings and reviews after work is completed.
-* Separate dashboards are available for Client, Freelancer, and Admin roles.
-* Admin can manage users, block or unblock accounts, manage tasks, and view payment history.
+* Separate dashboards are available for Client, Freelancer and Admin roles.
+* Admin can manage users, block or unblock accounts, manage tasks and view payment history.
 * Blocked users are prevented from logging in.
 * Browse Tasks page includes title search, category filtering and server-side pagination.
 * Home page shows dynamic content such as latest tasks, top freelancers, platform stats and client reviews.
@@ -47,6 +47,7 @@ https://skillswap-eta-eight.vercel.app/
 * tailwindcss
 * postcss
 * eslint
+* motion/react
 
 ### Backend
 
