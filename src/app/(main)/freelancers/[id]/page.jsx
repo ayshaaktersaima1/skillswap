@@ -13,11 +13,15 @@ const FreelancerDetailsPage = async ({ params }) => {
 
     const freelancer = await freelancerRes.json();
 
-    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${id}`, {
+    const freelancersEmail = freelancer?.email;
+
+    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${freelancersEmail}`, {
         cache: 'no-store',
     });
 
     const reviews = await reviewsRes.json();
+
+    console.log('lol', reviews)
 
     const totalReviews = Array.isArray(reviews) ? reviews.length : 0;
 
