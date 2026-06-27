@@ -75,11 +75,11 @@ export default function MyTaskCard({ task }) {
                 </div>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex gap-3">
                 {canEdit ? (
                     <Link
                         href={`/dashboard/client/my-tasks/updateTask/${task._id}`}
-                        className="flex h-11 flex-1 items-center justify-center rounded-xl border border-[#DDE7EB] bg-white text-sm font-semibold text-[#152A38] no-underline transition hover:bg-[#F7FAF9]"
+                        className="flex h-11 w-full flex-1 items-center justify-center rounded-xl border border-[#DDE7EB] bg-white text-sm font-semibold text-[#152A38] no-underline transition hover:bg-[#F7FAF9]"
                     >
                         Edit Task
                     </Link>
@@ -87,16 +87,18 @@ export default function MyTaskCard({ task }) {
                     <button
                         type="button"
                         disabled
-                        className="h-11 flex-1 rounded-xl border border-[#DDE7EB] bg-white text-sm font-semibold text-[#152A38] opacity-50"
+                        className="h-11 w-full flex-1 rounded-xl border border-[#DDE7EB] bg-white text-sm font-semibold text-[#152A38] opacity-50"
                     >
                         Edit Task
                     </button>
                 )}
 
-                <DeleteTaskBtn
-                    task={task}
-                    canDelete={canDelete}
-                />
+                <div className="flex-1 h-11 w-full">
+                    <DeleteTaskBtn
+                        task={task}
+                        canDelete={canDelete}
+                    />
+                </div>
             </div>
 
             {status === 'completed' && (

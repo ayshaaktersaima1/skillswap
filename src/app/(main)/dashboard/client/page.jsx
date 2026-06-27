@@ -42,12 +42,9 @@ const ClientDashboardHomepage = async () => {
     return (
         <section className="space-y-6">
             <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-[#52636C]">
-                    Client Overview
-                </p>
 
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#10202B]">
-                    Dashboard
+                    Client Dashboard
                 </h1>
 
                 <p className="mt-2 text-sm leading-6 text-[#52636C]">

@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SubmitWorkModal = ({ task, freelancersId, freelancersEmail, freelancersName }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -42,6 +43,7 @@ const SubmitWorkModal = ({ task, freelancersId, freelancersEmail, freelancersNam
 
         if (res.ok) {
             router.refresh();
+            toast.success('Work submitted successfully')
         }
     };
 

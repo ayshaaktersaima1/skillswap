@@ -2,6 +2,7 @@
 
 import { authClient } from '@/lib/auth-client';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const PostTask = () => {
     const [loading, setLoading] = useState(false);
@@ -40,7 +41,13 @@ const PostTask = () => {
                 authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify(taskData)
-        })
+        });
+        if (!res.ok) {
+            toast.danger('Failed to post task');
+            return;
+        }
+
+        toast.success('Task posted successfully');
 
 
         setLoading(false);

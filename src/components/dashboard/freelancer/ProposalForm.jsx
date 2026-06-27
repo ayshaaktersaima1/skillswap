@@ -3,6 +3,7 @@
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
     const router = useRouter();
@@ -49,7 +50,7 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.message || 'Failed to submit proposal');
+            toast.warning(data.message || 'Failed to submit proposal');
 
             if (res.status === 409) {
                 setApplied(true);
@@ -59,7 +60,7 @@ const ProposalForm = ({ taskId, taskTitle, clientId, checkAlreadyApplied }) => {
             return;
         }
 
-        alert('Proposal submitted successfully');
+        toast.success('Proposal submitted successfully');
         setApplied(true);
         router.refresh();
     };

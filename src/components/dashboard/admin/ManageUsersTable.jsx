@@ -5,6 +5,7 @@ import { Button, Chip, Table } from '@heroui/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const ManageUsersTable = ({ users }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -14,6 +15,7 @@ const ManageUsersTable = ({ users }) => {
 
         const status = user?.isBlocked;
         window.location.reload();
+        // toast.success(``)
 
         const { data: tokenData } = await authClient.token();
 

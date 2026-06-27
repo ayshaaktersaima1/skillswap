@@ -11,6 +11,7 @@ import {
     TextField,
 } from '@heroui/react';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const EditProfileForm = ({ freelancer }) => {
 
@@ -34,7 +35,7 @@ const EditProfileForm = ({ freelancer }) => {
 
         })
 
-        alert('successful')
+        toast.success('Your profile has been updated')
     };
 
 
@@ -50,9 +51,7 @@ const EditProfileForm = ({ freelancer }) => {
             className="flex w-full rounded-3xl border border-[#DDE7EB] bg-white p-8 shadow-sm md:p-10 flex-col gap-5"
         >
             <div className="mb-2">
-                <p className="text-sm font-semibold uppercase tracking-widest text-[#52636C]">
-                    Freelancer Profile
-                </p>
+
 
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#10202B]">
                     Edit Profile

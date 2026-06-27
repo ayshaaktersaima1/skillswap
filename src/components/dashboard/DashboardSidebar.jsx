@@ -49,11 +49,11 @@ export default function DashboardSidebar({ closeDrawer }) {
                 label: 'Payments',
                 href: '/dashboard/client/payments',
             },
-            {
-                icon: Gear,
-                label: 'Settings',
-                href: '/dashboard/client/settings',
-            },
+            // {
+            //     icon: Gear,
+            //     label: 'Settings',
+            //     href: '/dashboard/client/settings',
+            // },
         ],
 
         freelancer: [

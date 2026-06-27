@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const ReviewForm = ({ task }) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -38,7 +39,7 @@ const ReviewForm = ({ task }) => {
         });
 
         if (res.ok) {
-            alert('Review submitted');
+            toast.success('Thanks! Your review has been submitted.');
             setShowForm(false);
             form.reset();
             setRating(5);

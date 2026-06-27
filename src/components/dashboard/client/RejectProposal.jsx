@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
+import { toast } from "react-toastify";
 
 export function RejectProposal({ proposal }) {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -20,7 +21,7 @@ export function RejectProposal({ proposal }) {
         });
 
         if (res.ok) {
-            window.location.reload();
+            toast.success('Proposal has been rejected');
         }
     };
 

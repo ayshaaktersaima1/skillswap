@@ -3,6 +3,7 @@
 import GoogleBtn from '@/components/GoogleBtn';
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
 
@@ -39,12 +40,12 @@ export default function LoginPage() {
 
 
             if (error) {
-                alert(error.message || 'Invalid email or password');
+                toast.warning(error.message || 'Invalid email or password');
                 return;
             }
 
             if (!data?.user) {
-                alert('Invalid email or password');
+                toast.warning('Invalid email or password');
                 return;
             }
 

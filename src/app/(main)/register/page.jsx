@@ -13,6 +13,8 @@ import {
 } from '@heroui/react';
 import GoogleBtn from '@/components/GoogleBtn';
 import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
     const [role, setRole] = useState('client');
@@ -61,7 +63,9 @@ export default function RegisterPage() {
         if (error) {
             alert(error.message);
         } else {
-            alert('Account created');
+            await authClient.signOut();
+            toast.success('Account created successfully!');
+            redirect('/login');
         }
     };
 

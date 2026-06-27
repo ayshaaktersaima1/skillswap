@@ -3,16 +3,16 @@ import DashboardMobileSidebar from '@/components/dashboard/DashboardMobileSideba
 
 export default function DashboardLayout({ children }) {
     return (
-        <div className="flex min-h-screen bg-[#F7FAF9]">
+        <div className="flex h-screen overflow-hidden bg-[#F7FAF9]">
             {/* Sidebar: md and larger */}
-            <aside className="hidden w-72 border-r border-[#DDE7EB] bg-white md:block">
+            <aside className="hidden h-screen w-72 shrink-0 overflow-y-auto border-r border-[#DDE7EB] bg-white md:block">
                 <DashboardSidebar />
             </aside>
 
             {/* Content Area */}
-            <div className="flex flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col">
                 {/* Navbar */}
-                <header className="flex h-16 items-center gap-4 border-b border-[#DDE7EB] bg-white px-5 md:px-6">
+                <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-4 border-b border-[#DDE7EB] bg-white px-5 md:px-6">
                     {/* Mobile Menu: only small devices */}
                     <div className="md:hidden">
                         <DashboardMobileSidebar />

@@ -26,9 +26,7 @@ const ClientPayments = async () => {
     return (
         <section className="space-y-6">
             <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-[#52636C]">
-                    Client Payments
-                </p>
+
 
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#10202B]">
                     Payment History

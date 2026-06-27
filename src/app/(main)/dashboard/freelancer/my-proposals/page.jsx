@@ -27,9 +27,7 @@ const MyProposals = async () => {
     return (
         <div>
             <div className="mb-8">
-                <p className="text-sm font-semibold uppercase tracking-widest text-[#52636C]">
-                    Freelancer Dashboard
-                </p>
+
 
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#10202B]">
                     My Proposals
