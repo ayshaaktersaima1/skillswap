@@ -1,15 +1,24 @@
 import ManageTasksTable from '@/components/dashboard/admin/ManageTasksTable';
+import { auth } from '@/lib/auth';
 import { Table } from '@heroui/react';
+import { headers } from 'next/headers';
 import React from 'react';
 
 const Tasks = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
-    const res = await fetch(`${baseUrl}/api/tasks`, {
-        cache: 'no-store',
+    const res = await fetch(`${baseUrl}/api/allTaskForAdmin`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
     });
+    const tasks = await res.json()
 
-    const tasks = await res.json();
+
+    // console.log('cccc', data)
 
     return (
         <section className="space-y-6">

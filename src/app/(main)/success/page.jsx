@@ -117,18 +117,13 @@ export default async function Success({ searchParams }) {
                         </div>
 
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                            <Link
-                                href="/dashboard/client/receivedProposals"
-                                className="flex h-12 flex-1 items-center justify-center rounded-xl border border-[#DDE7EB] bg-white text-sm font-semibold text-[#152A38] no-underline transition hover:bg-[#F7FAF9]"
-                            >
-                                Back to Proposals
-                            </Link>
+
 
                             <Link
-                                href="/dashboard/client/my-tasks"
+                                href="/dashboard/client"
                                 className="flex h-12 flex-1 items-center justify-center rounded-xl bg-[#152A38] text-sm font-semibold text-white no-underline transition hover:bg-[#0F202B]"
                             >
-                                View My Tasks
+                                Go to Dashboard
                             </Link>
                         </div>
                     </div>
