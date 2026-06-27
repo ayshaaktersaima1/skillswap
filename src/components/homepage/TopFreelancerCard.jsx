@@ -11,6 +11,7 @@ const TopFreelancerCard = async ({ freelancer }) => {
         image,
         skills,
         hourlyRate,
+        email
     } = freelancer;
 
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -21,7 +22,7 @@ const TopFreelancerCard = async ({ freelancer }) => {
 
     const finishedJobs = await finishedJobsRes.json();
 
-    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${_id}`);
+    const reviewsRes = await fetch(`${baseUrl}/api/reviews/${email}`);
 
     const reviews = await reviewsRes.json();
 

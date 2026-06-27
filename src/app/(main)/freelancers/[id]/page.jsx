@@ -13,6 +13,8 @@ const FreelancerDetailsPage = async ({ params }) => {
 
     const freelancer = await freelancerRes.json();
 
+    console.log('mog', freelancer)
+
     const freelancersEmail = freelancer?.email;
 
     const reviewsRes = await fetch(`${baseUrl}/api/reviews/${freelancersEmail}`, {
