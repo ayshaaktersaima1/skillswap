@@ -4,6 +4,7 @@ import { authClient } from '@/lib/auth-client';
 import { Button, Form, Input, Label, TextField } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'react-toastify';
 // import { toast } from 'react-toastify';
 
 const UpdateTaskForm = ({ task }) => {
@@ -43,7 +44,7 @@ const UpdateTaskForm = ({ task }) => {
 
 
 
-        alert('Task updated successfully');
+        toast.success('Task updated successfully');
         router.push('/dashboard/client/my-tasks');
     };
 

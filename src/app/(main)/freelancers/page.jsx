@@ -6,7 +6,9 @@ const FreelancersPage = async () => {
 
 
 
-    const res = await fetch(`${baseUrl}/api/freelancers`);
+    const res = await fetch(`${baseUrl}/api/freelancers`, {
+        cache: 'no-store',
+    });
 
     const freelancers = await res.json();
 

@@ -2,10 +2,12 @@
 
 import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export function RejectProposal({ proposal }) {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+    const router = useRouter();
 
     const handleRejectProposal = async (proposal) => {
 
@@ -22,6 +24,7 @@ export function RejectProposal({ proposal }) {
 
         if (res.ok) {
             toast.success('Proposal has been rejected');
+            router.refresh();
         }
     };
 
