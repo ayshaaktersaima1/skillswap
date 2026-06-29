@@ -18,8 +18,6 @@ const Tasks = async () => {
     const tasks = await res.json()
 
 
-    // console.log('cccc', data)
-
     return (
         <section className="space-y-6">
             <div>

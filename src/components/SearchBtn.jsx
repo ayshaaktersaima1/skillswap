@@ -11,7 +11,7 @@ const SearchBtn = () => {
 
     const handleSearch = () => {
         if (search.trim()) {
-            console.log("SEARCH INPUT:", search);
+
             router.push(`/allTasks?search=${search}&page=1`);
         } else {
             router.push(`allTasks`);

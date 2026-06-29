@@ -13,7 +13,6 @@ const FreelancerDetailsPage = async ({ params }) => {
 
     const freelancer = await freelancerRes.json();
 
-    console.log('mog', freelancer)
 
     const freelancersEmail = freelancer?.email;
 
@@ -23,7 +22,6 @@ const FreelancerDetailsPage = async ({ params }) => {
 
     const reviews = await reviewsRes.json();
 
-    console.log('lol', reviews)
 
     const totalReviews = Array.isArray(reviews) ? reviews.length : 0;
 
